@@ -1,0 +1,82 @@
+$(document).ready(function(){
+	$('#save').click(function(){	
+		//intialize( list size, counter)
+		var count = $(':hidden#list_size').val();
+		var i = 0;	
+		errors = 0;
+		//loop to  check each list for errors
+		for(i = 0; i < count; i++){
+			var error_msg = check_errors(i);
+			if(error_msg != ""){
+				$('div#error_wrapper_'+i ).html(error_msg);
+				errors++;
+			}else{
+				$('div#error_wrapper_'+i).html("Succesfully Added!");
+			}
+		}
+		if(errors == 0){
+			var k = 0;
+			var form_data = $('form').serialize() ;
+			$.ajax({
+				url: "http://localhost/Mar/dynamic_form/index.php/site/validate",
+				type: 'GET',
+				data: form_data,
+				success: function(msg){
+					$('#display_list').html(msg);
+					$('#field_wrapper').html("");
+				}
+			});
+		}	
+		return false;
+		//create conditions (intercepting the submit button if there is an error)
+		//create function for check_errors where parameter is list number and return is the error message
+		function check_errors(a){
+			var display = "";
+			//intialize, transfer all post to variable
+			var lastname = $('input#lastname_'+a).val();
+			var firstname = $('input#firstname_'+a).val();
+			var address = $('input#address_'+a).val();
+			var email = $('input#email_'+a).val();
+			var age = $('input#age_'+a).val();
+			var course = $('input#course_'+a).val();
+			var birthyear = $('#month_'+a).val();
+			var birthmonth = $('#month_'+a).val();
+			var birthday = $('#days_'+a).val();
+			//check for empty strings
+			if (lastname == "")
+			{
+				display = display + "<p>Please Enter your Last Name</p>";
+			}
+			if (firstname == "")
+			{
+				display = display + "<p>Please Enter your First Name</p>";
+			}
+			if (address == "")
+			{
+				display = display + "<p>Please Enter your Address </p>";
+			}
+			if (email =="")
+			{
+				display = display + "<p>Please Enter your Email Address</p>";
+			}
+			if (age =="")
+			{
+				display = display + "<p>Please Enter your Age</p>";
+			}
+			if (course =="")
+			{
+				display = display + "<p>Please Enter your Course</p>";
+			}
+			if ((birthyear == "default") || (birthmonth == "default") || (birthday == "default"))
+			{
+				display = display + "<p>Please Enter valid Birthday</p>";
+			}			
+			var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+			if(!reg.test(email))
+			{
+				display = display+ "<p>Please Enter a Valid Email</p>";
+			}
+			return display;
+		}
+	});
+});

@@ -1,0 +1,99 @@
+<?php
+
+class Site extends CI_Controller{
+	
+	function index(){
+		$this->load->view('template');
+	}
+	function validate(){
+//validate server side
+		$this->load->model('list_model');
+		echo $this->list_model();
+		
+		$this->load->library('form_validation');
+		$count = $this->input->get('list_size');
+		$i = 0;
+		$information_list = "testing";
+		$lastname[0] = $this->input->get('lastname');
+		$firstname[0] = $this->input->get('firstname');
+		$address[0] = $this->input->get('address');
+		$email[0] = $this->input->get('email');
+		$age[0] = $this->input->get('age');
+		$course[0] = $this->input->get('course');
+		$year[0] = $this->input->get('year');
+		$month[0] = $this->input->get('month');
+		$days[0] = $this->input->get('days');
+		for($i ; $i < $count; $i++){
+			$lastname[$i] = $this->input->get('lastname_'.$i.'');
+			$firstname[$i] = $this->input->get('firstname_'.$i.'');
+			$address[$i] = $this->input->get('address_'.$i.'');
+			$email[$i] = $this->input->get('email_'.$i.'');
+			$age[$i] = $this->input->get('age_'.$i.'');
+			$course[$i] = $this->input->get('course_'.$i.'');
+			$year[$i] = $this->input->get('year_'.$i.'');
+			$month[$i] = $this->input->get('month_'.$i.'');
+			$days[$i] = $this->input->get('days_'.$i.'');		
+		}
+	
+
+		$this->form_validation->set_rules('lastname', 'Last Name ', 'required');		
+		$this->form_validation->set_rules('firsname', 'First Name ', 'required');		
+		$this->form_validation->set_rules('address', 'Address ', 'required');		
+		$this->form_validation->set_rules('email', 'Email ', 'trim|required|valid_email');		
+		$this->form_validation->set_rules('age', 'Age', 'integer|trim|required');		
+		$this->form_validation->set_rules('course', 'Course ', 'required');		
+		$this->form_validation->set_rules('year', 'Last Name ', 'trim|required');		
+		$this->form_validation->set_rules('month', 'Last Name ', 'trim|required');		
+		$this->form_validation->set_rules('days', 'Last Name ', 'trim|required');		
+		for($i = 0 ; $i < $count; $i++){		
+			$this->form_validation->set_rules('lastname_'.$i.'', 'Last Name ', 'required');		
+			$this->form_validation->set_rules('firsname_'.$i.'', 'First Name ', 'required');		
+			$this->form_validation->set_rules('address_'.$i.'', 'Address ', 'required');		
+			$this->form_validation->set_rules('email_'.$i.'', 'Email ', 'trim|required|valid_email');		
+			$this->form_validation->set_rules('age_'.$i.'', 'Age', 'integer|trim|required');		
+			$this->form_validation->set_rules('course_'.$i.'', 'Course ', 'required');		
+			$this->form_validation->set_rules('year_'.$i.'', 'Last Name ', 'trim|required');		
+			$this->form_validation->set_rules('month_'.$i.'', 'Last Name ', 'trim|required');		
+			$this->form_validation->set_rules('days_'.$i.'', 'Last Name ', 'trim|required');		
+		}
+		
+		//$this->list('generator');
+		//echo $test;
+		//$information_list .= "TESTING AGAIN";
+		//echo $information_list;
+		/*
+		for($i = 0; $i < $count; $i++){
+				$information_list .= $this->load->model('generator', $lastname[$i]);
+				$information_list .= $this->load->model('generator', $firstname[$i]);
+				$information_list .= $this->load->model('generator', $address[$i]);
+				$information_list .= $this->load->model('generator', $email[$i]);
+				$information_list .= $this->load->model('generator', $age[$i]);
+				$information_list .= $this->load->model('generator', $course[$i]);
+				$information_list .= $this->load->model('generator', $year[$i]);
+				$information_list .= $this->load->model('generator', $month[$i]);
+				$information_list .= $this->load->model('generator', $days[$i]);
+			}*/
+	}
+/*	//	if($this->form_validation->run() == FALSE){
+	//			$this->load->view('template');
+	//	}else{
+//call append model for returning list of students information
+			for($i = 0; $i < $count; $i++){
+				$information_list = $informationlist."".$this->load->model('generator', $lastname[$i]);
+				$information_list = $informationlist."".$this->load->model('generator', $firstname[$i]);
+				$information_list = $informationlist."".$this->load->model('generator', $address[$i]);
+				$information_list = $informationlist."".$this->load->model('generator', $email[$i]);
+				$information_list = $informationlist."".$this->load->model('generator', $age[$i]);
+				$information_list = $informationlist."".$this->load->model('generator', $course[$i]);
+				$information_list = $informationlist."".$this->load->model('generator', $year[$i]);
+				$information_list = $informationlist."".$this->load->model('generator', $month[$i]);
+				$information_list = $informationlist."".$this->load->model('generator', $days[$i]);
+			}
+	//	}
+//gather and generate list of informations by displaying the var 
+		echo $information_list;		
+	}
+//	function validate(){
+//		echo "WILL IT WORK";
+//	}*/
+}

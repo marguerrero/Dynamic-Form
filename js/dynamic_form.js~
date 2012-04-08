@@ -1,0 +1,33 @@
+$(document).ready(function(){
+//	var form = $('li#original').html();
+	var i = $('li').size();
+//	console.log(i);
+//	if (i == 1)
+		$(':button#delete').hide();
+//	else 
+//		$(':button#delete').show();
+//
+	$(':button#add').click(function(){
+		var form = form_format();
+		$('<li>'+form+'</li>').appendTo('ul');
+		$(':button#delete').show();
+		i++;
+	});
+	$(':button#delete').click(function(){
+		$('li:last').remove();
+		i--;
+		if(i == 1)
+		$(this).hide();
+	});
+	function form_format()
+	{
+		var form = '<label for=""></label>
+		<input type="text" placeholder = "Last Name" name = "lastname_"'+i+'" />
+		<input type="text" placeholder = "First Name" name = "firstname_"'+i+'" />
+		<input type="text" placeholder = "Address" name = "address_"'+i+'" " />
+		<input type="text" placeholder = "Email" name = "email_"'+i+'" " />
+		<input type="text" placeholder = "Age" name = "age_"'+i+'" " />
+		<input type="text" placeholder = "Course" name = "course_"'+i+'" " />'; 
+		return form;
+	}
+});
